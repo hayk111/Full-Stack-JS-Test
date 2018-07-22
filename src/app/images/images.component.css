@@ -1,0 +1,26 @@
+.uploadImgOuter {
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px dotted #c9302c;
+    overflow:hidden;
+}
+
+.uploadImgList li {
+    float: left;
+    margin: 0 5px;
+}
+
+.uploadedImg {
+    width: 200px;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.uploadedImgBody {
+    margin-top: 5px;
+}
+
+.saveImgs {
+    margin-top: 5px;
+}

@@ -1,0 +1,19 @@
+<div align="center" *ngIf="isLoggedIn">
+    <app-images></app-images>
+
+    <a href="/viewImages">View saved images</a>
+</div>
+
+<div align="center" *ngIf="!isLoggedIn">
+    <h2>Please Log in</h2>
+
+    <h5>Enter your username:</h5>
+    <input type="text" />
+
+    <h5>Enter your password:</h5>
+    <input type="text" />
+
+    <button class="btn btn-warning" (click)="logIn()">Log in</button>
+</div>
+
+
