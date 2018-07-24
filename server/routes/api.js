@@ -32,10 +32,8 @@ router.post('/register', (req, res) => {
   user.username = req.body.username
   user.password = req.body.password
   
-  console.log('heeeeeeeeeeeeeeeeere')
   usernameExists(user.username)
   .then(data => {
-    console.log('data commes:', data)
     if(!data)
       user.save(function (err) {
         if(err)
@@ -57,7 +55,6 @@ router.post('/login', (req, res) => {
   
   areCredentialsValid(user.username, user.password)
   .then(data => {
-    console.log('data commes:', data)
     if(data)
       user.save(function (err) {
         if(err)
@@ -73,15 +70,10 @@ router.post('/login', (req, res) => {
 
 
 router.post('/images', (req, res) => {
-  console.log('heeeeeeeeeeeeeeeeeeeere')
-  //console.log('on server::', req.body.username, req.body.data)
-
   req.body.data.forEach(element => {
     let base64Data = element.url.replace(/^data:image\/[a-z]+;base64,/, "")
  
     const filePath = 'dist/' + req.body.username + '/' + element.title
-    console.log('filePath::', filePath)
-    console.log('base64Data::::', base64Data)
     ensureDirectoryExistence(filePath)
 
     require("fs").writeFile(filePath, base64Data, 'base64', function(err) {
@@ -94,12 +86,6 @@ router.post('/images', (req, res) => {
 
 
 router.get('/images', (req, res) => {
-  console.log('heeeeeeeeeeeeeeeeeeeere images', req.query.username)
-
- /* const url = require('url');
-  const url_parts = url.parse(request.url, true);
-  const query = url_parts.query;*/
-
   const dirname = 'dist/' + req.query.username
 
   if (!fs.existsSync(dirname)) {
@@ -117,8 +103,6 @@ function usernameExists(username) {
   return new Promise((resolve, reject) => {
     User.findOne({ username }, function(err, obj) { 
       if(err) reject(err)
-      
-      console.log('found obj', obj)
       
       if(obj)
         resolve(true)
@@ -153,8 +137,6 @@ function getDataFromDirectory(dirname) {
   
       const filesCount = filenames.length
   
-      console.log('filenames count::', filesCount)
-  
       filenames.forEach(function(filename, i) {
         fs.readFile(dirname + '/' + filename, 'base64', function(err, content) {
           if (err) {
@@ -167,10 +149,7 @@ function getDataFromDirectory(dirname) {
             resolve(responseArr)
           }
         });
-      });
-  
-      console.log('responseArr length', responseArr.length)
-      
+      });      
     });
   })
 }

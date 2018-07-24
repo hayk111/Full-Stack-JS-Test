@@ -29,12 +29,10 @@ export class ImagesComponent implements OnInit {
   private file: File;
  
   public fileOver(fileIsOver: boolean): void {
-    console.log('heeeeey')
     this.fileIsOver = fileIsOver;
   }
  
   public onFileDrop(file: File): void {
-    console.log('Got file!', file.toString());
     this.uploadedImgs = [];
 
     this.uploadedImgs.push({
@@ -112,7 +110,7 @@ export class ImagesComponent implements OnInit {
   getMyImgs() {
     this.myImagesLoading = true
 
-    this.imagesService.getAllImages('username') //must be provided real username'
+    this.imagesService.getAllImages(this.username)
     .subscribe(data => {
         console.log('get data from server!!!', data.data)
         
@@ -121,11 +119,8 @@ export class ImagesComponent implements OnInit {
           return;          
         }
 
-        //myImages
         this.myImagesLoading = false
         this.myImages = data.data.slice().map(img => 'data:image/jpeg;base64,' + img) // must come real image names from DB
-
-        console.log('My IMages are::', this.myImages)
     }, error => {
         console.log(JSON.stringify(error.json()));
         this.myImagesLoading = false        
@@ -142,9 +137,8 @@ export class ImagesComponent implements OnInit {
   }
 
   saveUploadedImgs() {
-    console.log('save1')
     this.savingImages = true
-    this.imagesService.saveImages(this.uploadedImgs, 'username')
+    this.imagesService.saveImages(this.uploadedImgs, this.username)
       .subscribe(data => {
           console.log('data from server!!!', data)
           this.savingImages = false
@@ -163,10 +157,7 @@ export class ImagesComponent implements OnInit {
   }
 
   onChange(event: any, input: any) {
-    console.log('event itself:', event)
     let files = [].slice.call(event.target.files);
-
-    console.log('changed files:', files)
 
     let newImgs = files.map((file) => {
       let reader = new FileReader();
@@ -175,12 +166,10 @@ export class ImagesComponent implements OnInit {
       img.title = file.name
       img.location = ''
       img.date = new Date()
-      console.log('in for, event:', <FileReader>event.target)
 
       reader.onload = (event: ProgressEvent) => {
         img.loading = false
         img.url = (<FileReader>event.target).result;
-        console.log('in for, here7777777:', <FileReader>event.target)
       }
 
       reader.readAsDataURL(file);
@@ -189,8 +178,6 @@ export class ImagesComponent implements OnInit {
     })
 
     this.uploadedImgs = this.uploadedImgs.concat(newImgs)
-
-    console.log('uploadedImgs:', this.uploadedImgs)
   }
 
 }

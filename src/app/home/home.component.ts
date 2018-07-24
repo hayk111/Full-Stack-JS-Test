@@ -31,7 +31,6 @@ export class HomeComponent implements OnInit {
       this.homeService.register(username, password)
         .subscribe(data => {
           if(data.status === 'exists') {
-            console.log('status exiiiists')
             alert('User with this username exists.')
           }
           else
@@ -39,24 +38,18 @@ export class HomeComponent implements OnInit {
         }, error => {
           if(error.json().status === 'exists')
             alert('User with this username exists.')
-            
-          console.log(JSON.stringify(error.json()));
         })
       } else 
           alert('Please input both username and password')  
   }
 
   logIn(username: string, password: string) {
-    console.log('username', username)
-    console.log('password', password)
-    
     if(username && password) {
       this.homeService.login(username, password)
         .subscribe(data => {
           if(data.status === 'invalid_creds')
             alert('Invalid username or password.')
           else {
-            console.log('in elseeeeee')
             this.isLoggedIn = true
             sessionStorage.setItem('username', username)
           }
