@@ -6,8 +6,6 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router'
 
 import { AppComponent } from './app.component';
-import { PostsComponent } from './posts/posts.component';
-import { PostsService } from './posts.service';
 import { HomeComponent } from './home/home.component';
 import { ImagesComponent } from './images/images.component'
 import { ImagesService } from './images.service' 
@@ -30,7 +28,6 @@ const ROUTES = [
 @NgModule({
   declarations: [
     AppComponent,
-    PostsComponent,
     HomeComponent,
     ImagesComponent
   ],
