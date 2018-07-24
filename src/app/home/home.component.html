@@ -8,12 +8,14 @@
     <h2>Please Log in</h2>
 
     <h5>Enter your username:</h5>
-    <input type="text" />
+    <input type="text" #username />
 
     <h5>Enter your password:</h5>
-    <input type="text" />
-
-    <button class="btn btn-warning" (click)="logIn()">Log in</button>
+    <input type="password" #password />
+    
+    <br />
+    <br />
+    <button class="btn btn-warning" (click)="logIn(username.value, password.value)">Log in</button>
 </div>
 
 

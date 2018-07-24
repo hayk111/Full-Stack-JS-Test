@@ -5,16 +5,39 @@ const express = require('express'),
       api = require('./server/routes/api'),
       app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+const User = require('./server/models/user')
+
+app.use(bodyParser.json({limit:'50mb'}));
+app.use(bodyParser.urlencoded({ extended: false, limit:'50mb' }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'server', 'images')));
 
 app.use('/api', api);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
+
+
+/*const mongoose = require('mongoose');
+ 
+mongoose.connect('mongodb://localhost/images');
+
+mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+
+mongoose.connection.once('open', function callback () {
+  console.log("Connected to db");
+});
+
+const UserModel = mongoose.model('User', User);
+
+const instance = new UserModel();
+
+instance.username = 'first';
+instance.save(function (err) {
+
+});*/
 
 /**
  * Get port from environment and store in Express.

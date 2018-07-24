@@ -2,27 +2,64 @@
   <h2>Browse images or drop them below to save</h2>
   
   <input type="file" (change)="onChange($event)" id="selectedFile" style="display: none;" multiple />
-  <input type="button" value="Browse images..." onclick="document.getElementById('selectedFile').click();" />
+  <input type="button" value="Browse images..." onclick="document.getElementById('selectedFile').click();" /> You can also drop images into dotted box
   
   <div class="saveImgs" *ngIf="uploadedImgs?.length > 0">
       <button class="btn btn-success" (click)="saveUploadedImgs()">Save images</button>
+      <br />
+      <img *ngIf="savingImages" src="/assets/loading.gif" alt="loading" />
+      
+      <h3 *ngIf="imagesSaved" [ngStyle]="{'margin': '5px 0'}">Images saved...</h3>
   </div>
-  <div class="uploadImgOuter">
-    <ul class="uploadImgList list-unstyled">
-        <li *ngFor="let img of uploadedImgs; let i = index">
-          <div class="uploadedImg" align="center">
-              <img *ngIf="img.loading" src="/assets/loading.gif" alt="loading" />
-
-              <img [src]="img.url" *ngIf="!img.loading" width="150" height="150">
-              <div class="uploadedImgBody">
-                <h6>Title: {{img.title}}</h6>
-                <h6>Date: {{img.date | date: 'dd/MM/yyyy HH:mm:ss'}}</h6>
-
-                <button class="btn btn-danger" (click)="removeUploadedImg(i)" >Remove image</button>
-              </div>
-          </div>
-        </li>
-    </ul>
+  <div id="klass">
+      <div class="uploadImgOuter" *ngIf="!uploadImgOuterHover">
+          <ul class="uploadImgList list-unstyled">
+              <li *ngFor="let img of uploadedImgs; let i = index">
+                <div class="uploadedImg" align="center">
+                    <img *ngIf="img.loading" src="/assets/loading.gif" alt="loading" />
+      
+                    <img [src]="img.url" *ngIf="!img.loading" width="150" height="150">
+                    <div class="uploadedImgBody">
+                      <h6>Title: {{img.title}}</h6>
+                      <h6>Date: {{img.date | date: 'dd/MM/yyyy HH:mm:ss'}}</h6>
+      
+                      <button class="btn btn-danger" (click)="removeUploadedImg(i)" >Remove image</button>
+                    </div>
+                </div>
+              </li>
+          </ul>
+        </div>
+      
+        <div class="uploadImgOuterHovered" *ngIf="uploadImgOuterHover">
+            <ul class="uploadImgList list-unstyled">
+                <li *ngFor="let img of uploadedImgs; let i = index">
+                  <div class="uploadedImg" align="center">
+                      <img *ngIf="img.loading" src="/assets/loading.gif" alt="loading" />
+        
+                      <img [src]="img.url" *ngIf="!img.loading" width="150" height="150">
+                      <div class="uploadedImgBody">
+                        <h6>Title: {{img.title}}</h6>
+                        <h6>Date: {{img.date | date: 'dd/MM/yyyy HH:mm:ss'}}</h6>
+        
+                        <button class="btn btn-danger" (click)="removeUploadedImg(i)" >Remove image</button>
+                      </div>
+                  </div>
+                </li>
+            </ul>
+        </div>
   </div>
   
+
+  <hr />
+  
+  <h2>My photos</h2>
+  <img *ngIf="myImagesLoading" src="/assets/loading.gif" alt="loading" />
+
+  <div class="myFeateredPhotos">
+    <ul class="uploadImgList list-unstyled">
+        <li *ngFor="let img of myImages; let i = index">
+              <img [src]="img" width="150" height="150">
+        </li>
+    </ul>
+</div>
 </div>

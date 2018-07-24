@@ -16,8 +16,14 @@ export class HomeComponent implements OnInit {
     this.isLoggedIn = false
   }
 
-  logIn() {
-    this.isLoggedIn = true
+  logIn(username: string, password: string) {
+    console.log('username', username)
+    console.log('password', password)
+    
+    if(username && password) 
+      this.isLoggedIn = true
+    else
+      alert('Please input both username and password')  
   }
 
 }

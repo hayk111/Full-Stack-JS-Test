@@ -11,6 +11,7 @@ import { PostsService } from './posts.service';
 import { HomeComponent } from './home/home.component';
 import { ImagesComponent } from './images/images.component'
 import { ImagesService } from './images.service' 
+import { FileDropModule } from 'angular2-file-drop';
 
 const ROUTES = [
   {
@@ -35,7 +36,8 @@ const ROUTES = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    FileDropModule
   ],
   providers: [ImagesService],
   bootstrap: [AppComponent]

@@ -11,6 +11,16 @@ export class ImagesService {
     console.log('save2')
     
     console.log('data:', data, 'username:', username)
+
+    return this.http
+        .post('/api/images', {data, username})
+        .map(res => res.json());
+     
   }
 
+  getAllImages(username: string) {
+    console.log('getAllImages in service called')
+    return this.http.get(`/api/images?username=${username}`)
+                    .map(res => res.json());
+  }
 }

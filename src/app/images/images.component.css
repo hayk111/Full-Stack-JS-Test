@@ -5,6 +5,14 @@
     overflow:hidden;
 }
 
+.uploadImgOuterHovered {
+    background: #FAABAB;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px dotted #c9302c;
+    overflow:hidden;
+}
+
 .uploadImgList li {
     float: left;
     margin: 0 5px;
@@ -23,4 +31,18 @@
 
 .saveImgs {
     margin-top: 5px;
+}
+
+.klass {
+    width: 300px;
+    height: 300px;
+    border: 1px solid black;
+    margin-top: 10px;
+}
+
+.myFeateredPhotos {
+    border: 1px solid black;
+    margin-top: 5px;
+    padding: 5px;
+    overflow:hidden;
 }
