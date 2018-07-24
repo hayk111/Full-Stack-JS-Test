@@ -5,8 +5,6 @@ const express = require('express'),
       api = require('./server/routes/api'),
       app = express();
 
-const User = require('./server/models/user')
-
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({ extended: false, limit:'50mb' }));
 
@@ -20,7 +18,7 @@ app.get('*', (req, res) => {
 });
 
 
-/*const mongoose = require('mongoose');
+const mongoose = require('mongoose');
  
 mongoose.connect('mongodb://localhost/images');
 
@@ -29,15 +27,6 @@ mongoose.connection.on('error', console.error.bind(console, 'connection error:')
 mongoose.connection.once('open', function callback () {
   console.log("Connected to db");
 });
-
-const UserModel = mongoose.model('User', User);
-
-const instance = new UserModel();
-
-instance.username = 'first';
-instance.save(function (err) {
-
-});*/
 
 /**
  * Get port from environment and store in Express.

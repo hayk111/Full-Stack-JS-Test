@@ -1,4 +1,5 @@
 <div align="center" class="img-upload">
+  <h2>Hi {{username}}</h2>
   <h2>Browse images or drop them below to save</h2>
   
   <input type="file" (change)="onChange($event)" id="selectedFile" style="display: none;" multiple />
@@ -61,5 +62,8 @@
               <img [src]="img" width="150" height="150">
         </li>
     </ul>
-</div>
+  </div>
+  <br />
+
+  <button class="btn btn-danger" (click)="logOut()" >Log out</button>
 </div>

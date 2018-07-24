@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ImagesComponent } from '../images/images.component'
-
+import { HomeService } from '../home.service'
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -8,20 +8,62 @@ import { ImagesComponent } from '../images/images.component'
   
 })
 export class HomeComponent implements OnInit {
-  isLoggedIn: boolean;
+  isLoggedIn: boolean = false;
+  register: boolean = false;
 
-  constructor() { }
+  constructor(private homeService: HomeService) { }
 
   ngOnInit() {
-    this.isLoggedIn = false
+    if(sessionStorage.getItem('username'))
+      this.isLoggedIn = true
+  }
+
+  goRegister() {
+    this.register = true
+  }
+
+  goLogin() {
+    this.register = false
+  }
+
+  signUp(username: string, password: string) {
+    if(username && password) {
+      this.homeService.register(username, password)
+        .subscribe(data => {
+          if(data.status === 'exists') {
+            console.log('status exiiiists')
+            alert('User with this username exists.')
+          }
+          else
+            alert('User created. Go to login page and log in.')
+        }, error => {
+          if(error.json().status === 'exists')
+            alert('User with this username exists.')
+            
+          console.log(JSON.stringify(error.json()));
+        })
+      } else 
+          alert('Please input both username and password')  
   }
 
   logIn(username: string, password: string) {
     console.log('username', username)
     console.log('password', password)
     
-    if(username && password) 
-      this.isLoggedIn = true
+    if(username && password) {
+      this.homeService.login(username, password)
+        .subscribe(data => {
+          if(data.status === 'invalid_creds')
+            alert('Invalid username or password.')
+          else {
+            console.log('in elseeeeee')
+            this.isLoggedIn = true
+            sessionStorage.setItem('username', username)
+          }
+        }, error => {
+          console.log(JSON.stringify(error.json()));
+        })
+    }
     else
       alert('Please input both username and password')  
   }

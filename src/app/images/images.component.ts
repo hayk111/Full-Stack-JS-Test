@@ -15,6 +15,7 @@ export class ImagesComponent implements OnInit {
   imagesSaved: boolean;
   uploadImgOuterHover: boolean = false
   myImagesLoading: boolean = false
+  username: string
 
   public fileIsOver: boolean = false;
 
@@ -49,6 +50,8 @@ export class ImagesComponent implements OnInit {
     this.savingImages = false
     this.imagesSaved = false
     this.uploadedImgs = []
+
+    this.username = sessionStorage.getItem('username')
 
     this.getMyImgs()
 
@@ -131,6 +134,11 @@ export class ImagesComponent implements OnInit {
 
   removeUploadedImg(i: number) {
     this.uploadedImgs.splice(i, 1)
+  }
+
+  logOut() {
+    sessionStorage.clear();
+    location.reload();
   }
 
   saveUploadedImgs() {

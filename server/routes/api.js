@@ -6,6 +6,8 @@ const fs = require('fs')
 const axios = require('axios')
 const API = 'https://jsonplaceholder.typicode.com';
 
+const User = require('../models/user')
+
 /* GET api listing. */
 router.get('/', (req, res) => {
   res.send('api works');
@@ -23,6 +25,51 @@ router.get('/posts', (req, res) => {
       });
 });
 
+
+router.post('/register', (req, res) => {
+  const user = new User()
+
+  user.username = req.body.username
+  user.password = req.body.password
+  
+  console.log('heeeeeeeeeeeeeeeeere')
+  usernameExists(user.username)
+  .then(data => {
+    console.log('data commes:', data)
+    if(!data)
+      user.save(function (err) {
+        if(err)
+          res.status(500).json({status: 'error'});
+        else
+          res.status(200).json({status: 'ok'});
+      });
+    else   
+      res.status(400).json({status: 'exists'});
+      
+  })
+})
+
+router.post('/login', (req, res) => {
+  const user = new User()
+
+  user.username = req.body.username
+  user.password = req.body.password
+  
+  areCredentialsValid(user.username, user.password)
+  .then(data => {
+    console.log('data commes:', data)
+    if(data)
+      user.save(function (err) {
+        if(err)
+          res.status(500).json({status: 'error'});
+        else
+          res.status(200).json({status: 'ok'});
+      });
+    else   
+      res.json({status: 'invalid_creds'});
+      
+  })
+})
 
 
 router.post('/images', (req, res) => {
@@ -66,6 +113,33 @@ router.get('/images', (req, res) => {
   
 });
 
+function usernameExists(username) {
+  return new Promise((resolve, reject) => {
+    User.findOne({ username }, function(err, obj) { 
+      if(err) reject(err)
+      
+      console.log('found obj', obj)
+      
+      if(obj)
+        resolve(true)
+      else
+        resolve(false)
+    })
+  })
+}
+
+function areCredentialsValid(username, password) {
+  return new Promise((resolve, reject) => {
+    User.findOne({ username, password }, function(err, obj) { 
+      if(err) reject(err)
+      
+      if(obj)
+        resolve(true)
+      else
+        resolve(false)
+    })
+  })
+}
 
 function getDataFromDirectory(dirname) {
   return new Promise((resolve, reject) => {

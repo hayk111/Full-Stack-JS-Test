@@ -4,7 +4,7 @@
     <a href="/viewImages">View saved images</a>
 </div>
 
-<div align="center" *ngIf="!isLoggedIn">
+<div align="center" *ngIf="!isLoggedIn && !register">
     <h2>Please Log in</h2>
 
     <h5>Enter your username:</h5>
@@ -16,6 +16,22 @@
     <br />
     <br />
     <button class="btn btn-warning" (click)="logIn(username.value, password.value)">Log in</button>
+    <button class="btn btn-success" (click)="goRegister()">Register</button>    
+</div>
+
+<div align="center" *ngIf="!isLoggedIn && register">
+    <h2>Please Log in</h2>
+
+    <h5>Create username:</h5>
+    <input type="text" #username />
+
+    <h5>Create password:</h5>
+    <input type="password" #password />
+    
+    <br />
+    <br />
+    <button class="btn btn-warning" (click)="signUp(username.value, password.value)">Register</button>
+    <button class="btn btn-success" (click)="goLogin()">Go to log in</button>        
 </div>
 
 
